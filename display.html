@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Display Result</title>
+	  <style type = "text/css">
+         table         { width: 300px;
+                         border-collapse:collapse; 
+                         background-color: lightblue; }
+         table, td, th { border: 1px solid black; 
+                         padding: 4px; }
+         th            { text-align: left; 
+                         color: white;
+                         background-color: darkblue; }
+         tr.oddrow     { background-color: white; }
+      </style>
+   </head>
+   <body>
+      <script>
+         function parse_query_string(query) {
+         var data_key = [];
+		 var data_value = [];
+          var vars = query.split("?");
+          vars = vars[1].split("&");
+          for (var i = 0; i < vars.length; i++){
+          var tmp=vars[i].split("=");
+         data_key[i]=tmp[0];
+		 data_value[i]=tmp[1];
+          }
+          data_value[1]=decodeURIComponent(data_value[1]);
+		  data_value[2]=decodeURIComponent(data_value[2]);
+		  data_value[4]=decodeURIComponent(data_value[4]);
+          return [data_key,data_value];
+         }
+         var query_string = window.location.search;
+         var parsed_qs = parse_query_string(query_string);
+
+         document.writeln( "<table>" );
+         document.writeln( "<caption>Result</caption>" );
+         document.writeln( "<thead><tr><th>Name</th>" );
+         document.writeln( "<th>Data</th>" );
+         document.writeln( "</tr></thead><tbody>" );
+
+         for ( var count_data = 1; count_data <= parsed_qs[0].length; ++count_data )
+         {
+
+            if ( count_data % 2 !== 0 )
+               document.writeln( "<tr class='oddrow'><td>" + parsed_qs[0][count_data-1] + 
+                  "</td><td>" + parsed_qs[1][count_data-1] + "</td></tr>" );
+            else
+               document.writeln( "<tr><td>" + parsed_qs[0][count_data-1] + 
+                  "</td><td>" + parsed_qs[1][count_data-1] + "</td></tr>" );
+         } //end for
+
+         document.writeln( "</tbody></table>" );
+      </script>
+   </body>
+</html>
